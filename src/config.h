@@ -2,7 +2,7 @@
 #define CONFIG_H_
 
 // Software Constants
-#define THRESHOLD 500
+#define THRESHOLD 800
 
 // Hardware Constants
 #define PORT_IR_0 A0
@@ -13,7 +13,6 @@
 #define PC_SERIAL_RX USBRX
 
 // Variable Constants
-#define SAMPLE_SIZE 32
-#define AMBIENT_SIZE 256
+#define SAMPLE_SIZE 8
 
 #endif // CONFIG_H_
