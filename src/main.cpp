@@ -13,6 +13,7 @@ Serial pc_serial(PC_SERIAL_TX, PC_SERIAL_RX);
 u_int16_t samples[SAMPLE_SIZE];
 int sum_samples = 0;
 u_int16_t avg_reading;
+u_int16_t ambient_lvl;
 
 /**
  *  Main code for the microcontroller
@@ -24,10 +25,10 @@ int main() {
     for (int i = 0; i < SAMPLE_SIZE; i++) {
         samples[i] = ir_0.read_u16();
         sum_samples += samples[i];
-        pc_serial.printf("%d\n", sum_samples);
     }
 
     avg_reading = sum_samples / SAMPLE_SIZE;
+    ambient_lvl = avg_reading;
 
     pc_serial.printf("%d\n", avg_reading);
 
@@ -44,7 +45,7 @@ int main() {
         sum_samples = sum_samples + samples[SAMPLE_SIZE - 1] - old_sample;
         avg_reading = sum_samples / SAMPLE_SIZE;
 
-        if (avg_reading <= THRESHOLD) {
+        if (abs(ambient_lvl - avg_reading) >= THRESHOLD) {
             pc_serial.putc('0');
         } 
         // else if (ir_1 <= THRESHOLD) {
