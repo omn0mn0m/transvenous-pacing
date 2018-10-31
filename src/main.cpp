@@ -29,6 +29,12 @@ struct ir_sensor {
 struct ir_sensor ir_0(PORT_IR_0);
 struct ir_sensor ir_1(PORT_IR_1);
 struct ir_sensor ir_2(PORT_IR_2);
+struct ir_sensor ir_3(PORT_IR_3);
+struct ir_sensor ir_4(PORT_IR_4);
+struct ir_sensor ir_5(PORT_IR_5);
+struct ir_sensor ir_6(PORT_IR_6);
+struct ir_sensor ir_7(PORT_IR_7);
+struct ir_sensor ir_8(PORT_IR_8);
 
 // Global Functions
 void ir_init(struct ir_sensor *ir);
@@ -43,6 +49,12 @@ main(void) {
     ir_init(&ir_0);
     ir_init(&ir_1);
     ir_init(&ir_2);
+    // ir_init(&ir_3);
+    // ir_init(&ir_4);
+    // ir_init(&ir_5);
+    // ir_init(&ir_6);
+    // ir_init(&ir_7);
+    // ir_init(&ir_8);
 
     pc_serial.printf("Initialised\n");
 
@@ -54,6 +66,12 @@ main(void) {
         ir_0.avg_reading = get_moving_average(&ir_0);
         ir_1.avg_reading = get_moving_average(&ir_1);
         ir_2.avg_reading = get_moving_average(&ir_2);
+        // ir_3.avg_reading = get_moving_average(&ir_3);
+        // ir_4.avg_reading = get_moving_average(&ir_4);
+        // ir_5.avg_reading = get_moving_average(&ir_5);
+        // ir_6.avg_reading = get_moving_average(&ir_6);
+        // ir_7.avg_reading = get_moving_average(&ir_7);
+        // ir_8.avg_reading = get_moving_average(&ir_8);
         
         if (abs(ir_2.ambient_lvl - ir_2.avg_reading) >= THRESHOLD) {
             if (prev_pos != POS_MID_ATR) {
