@@ -29,12 +29,12 @@ struct ir_sensor {
 struct ir_sensor ir_0(PORT_IR_0);
 struct ir_sensor ir_1(PORT_IR_1);
 struct ir_sensor ir_2(PORT_IR_2);
-struct ir_sensor ir_3(PORT_IR_3);
-struct ir_sensor ir_4(PORT_IR_4);
-struct ir_sensor ir_5(PORT_IR_5);
-struct ir_sensor ir_6(PORT_IR_6);
-struct ir_sensor ir_7(PORT_IR_7);
-struct ir_sensor ir_8(PORT_IR_8);
+// struct ir_sensor ir_3(PORT_IR_3);
+// struct ir_sensor ir_4(PORT_IR_4);
+// struct ir_sensor ir_5(PORT_IR_5);
+// struct ir_sensor ir_6(PORT_IR_6);
+// struct ir_sensor ir_7(PORT_IR_7);
+// struct ir_sensor ir_8(PORT_IR_8);
 
 // Global Functions
 void ir_init(struct ir_sensor *ir);
