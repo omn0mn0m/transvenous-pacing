@@ -18,10 +18,8 @@ Serial pc_serial(PC_SERIAL_TX, PC_SERIAL_RX);
 // Global Variables
 struct ir_sensor {
     AnalogIn   sensor;
-    u_int16_t  samples[SAMPLE_SIZE];
     u_int16_t  avg_reading;
     u_int16_t  ambient_lvl;
-    int        sum_samples;
     // Constructor
     ir_sensor(PinName analog_pin) : sensor(analog_pin) {};
 };
@@ -99,32 +97,32 @@ main(void) {
     }
 }
 
+/**
+ * Calculates the first average and ambient level for the sensor
+ * 
+ * @param ir Pointer to a sensor struct
+ */
 void 
 ir_init(struct ir_sensor *ir) {
+    int sum_samples;
+
     for (int i = 0; i < SAMPLE_SIZE; i++) {
-        ir->samples[i] = ir->sensor.read_u16();
-        ir->sum_samples += ir->samples[i];
+        sum_samples += ir->sensor.read_u16();
     }
 
-    ir->avg_reading = ir->sum_samples / SAMPLE_SIZE;
+    ir->avg_reading = sum_samples / SAMPLE_SIZE;
     ir->ambient_lvl = ir->avg_reading;
-
-    // pc_serial.printf("%d\n", ir->ambient_lvl);
 }
 
+/**
+ * Returns an exponential moving average
+ * (more like an IIR filter than anything else though)
+ * 
+ * @param ir_sensor The sensor to read from
+ * 
+ * @return Moving Average 
+ */
 u_int16_t
 get_moving_average(struct ir_sensor *ir) {
-    int old_sample = ir->samples[0];
-
-    for (int i = 1; i < SAMPLE_SIZE; i++) {
-        ir->samples[i - 1] = ir->samples[i];
-    }
-
-    ir->samples[SAMPLE_SIZE - 1] = ir->sensor.read_u16();
-
-    ir->sum_samples = ir->sum_samples + ir->samples[SAMPLE_SIZE - 1] - old_sample;
-
-    // pc_serial.printf("%d\n", ir->avg_reading);
-
-    return ir->sum_samples / SAMPLE_SIZE;
+    return (ir->avg_reading * (SAMPLE_SIZE - 1) + ir->sensor.read_u16()) / SAMPLE_SIZE;
 }
