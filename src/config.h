@@ -2,7 +2,7 @@
 #define CONFIG_H_
 
 // Software Constants
-#define THRESHOLD 800
+#define THRESHOLD 1000
 
 // Hardware Constants
 #define PORT_IR_0 A0
