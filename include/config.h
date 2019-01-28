@@ -5,18 +5,21 @@
 #define THRESHOLD 1000
 
 // Hardware Constants
-#define PORT_IR_0 A0
-#define PORT_IR_1 A1
-#define PORT_IR_2 A2
-#define PORT_IR_3 A3
-#define PORT_IR_4 A4
-#define PORT_IR_5 A5
-#define PORT_IR_6 A6
-#define PORT_IR_7 D3
-#define PORT_IR_8 D6
+#define PORT_IR_0 36
+#define PORT_IR_1 39
+#define PORT_IR_2 34
+#define PORT_IR_3 35
+#define PORT_IR_4 32
+#define PORT_IR_5 33
+#define PORT_IR_6 25
+#define PORT_IR_7 26
+#define PORT_IR_8 27
 
 #define PC_SERIAL_TX USBTX
 #define PC_SERIAL_RX USBRX
+
+#define BAUD_RATE    9600
+#define USE_BT       1
 
 // Variable Constants
 #define SAMPLE_SIZE 8
