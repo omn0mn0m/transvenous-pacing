@@ -1,3 +1,12 @@
+/**
+ * know when sensor is going from one to another
+ * track if the position has gone forward or backwards
+ *
+ * know distance
+ * know it works
+ * know failures in communications
+ */
+
 #include <Arduino.h>
 #include <BluetoothSerial.h>
 
@@ -231,4 +240,9 @@ get_moving_average(struct ir_sensor *ir) {
     uint16_t moving_avg = ((ir->avg_reading * (SAMPLE_SIZE - 1)) + analogRead(ir->pin)) / SAMPLE_SIZE;
 
     return moving_avg;
+}
+
+int
+test_function(int x) {
+  return x;
 }
