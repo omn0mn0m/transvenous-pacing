@@ -241,8 +241,3 @@ get_moving_average(struct ir_sensor *ir) {
 
     return moving_avg;
 }
-
-int
-test_function(int x) {
-  return x;
-}

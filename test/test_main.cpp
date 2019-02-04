@@ -11,12 +11,6 @@
 // Mocks
 
 // Tests
-TEST_CASE( "Factorials are computed", "[factorial]" ) {
-    REQUIRE( test_function(1) == 1 );
-    REQUIRE( test_function(2) == 2 );
-    REQUIRE( test_function(3) == 3 );
-}
-
 TEST_CASE( "Initialises a sensor and gets an initial reading", "[ir_init") {
     set_pin_val(PORT_IR_0, 3000);
 
@@ -31,10 +25,24 @@ TEST_CASE( "Testing getting moving average", "[moving_average" ) {
     set_pin_val(PORT_IR_0, 3000);
 
     ir_init(&ir_0);
-
-    REQUIRE( get_moving_average(&ir_0) == 3000);
+    ir_0.avg_reading = get_moving_average(&ir_0);
+    REQUIRE( ir_0.avg_reading == 3000);
 
     set_pin_val(ir_0.pin, 3500);
-    REQUIRE( get_moving_average(&ir_0) == 3062);
-    REQUIRE( get_moving_average(&ir_0) == 3116);
+
+    ir_0.avg_reading = get_moving_average(&ir_0);
+    REQUIRE( ir_0.avg_reading == 3062);
+
+    ir_0.avg_reading = get_moving_average(&ir_0);
+    REQUIRE( ir_0.avg_reading == 3116);
+}
+
+TEST_CASE( "Testing setup code", "[setup]" ) {
+    set_pin_val(PORT_IR_0, 3000);
+    
+    setup();
+
+    REQUIRE(ir_0.pin == PORT_IR_0);
+    REQUIRE(ir_0.ambient_lvl == 3000);
+    REQUIRE(ir_0.avg_reading == ir_0.ambient_lvl);
 }
