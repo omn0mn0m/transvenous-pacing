@@ -18,8 +18,8 @@ help:		## Show this help.
 # Make Targets
 # =================================== 
 test_main:
-	$(CPPC) -Itest/mock -Iinclude $(CPPFLAGS) -o test/$@ test/$@.cpp
+	$(CPPC) -Itest/mock -Iinclude $(CPPFLAGS) -o test/bin/$@ test/$@.cpp
 
 test:		## Runs unit tests for the devices
 test: test_main
-	./test/$^
+	./test/bin/$^
