@@ -20,8 +20,6 @@
 #define POS_LOW_ATR     0x34 // 4
 #define POS_VEN         0x35 // 5
 #define POS_VEN_WALL    0x36 // 6
-#define POS_PUL_VEIN    0x37 // 7
-#define POS_IVC         0x38 // 8
 
 // Serial Commands
 #define COM_RECALIBRATE 0x43 // C
@@ -37,14 +35,11 @@ struct ir_sensor {
 };
 
 struct ir_sensor ir_0 = {PORT_IR_0, 0, 0};
-// struct ir_sensor ir_1(PORT_IR_1);
-// struct ir_sensor ir_2(PORT_IR_2);
-// struct ir_sensor ir_3(PORT_IR_3);
-// struct ir_sensor ir_4(PORT_IR_4);
-// struct ir_sensor ir_5(PORT_IR_5);
-// struct ir_sensor ir_6(PORT_IR_6);
-// struct ir_sensor ir_7(PORT_IR_7);
-// struct ir_sensor ir_8(PORT_IR_8);
+struct ir_sensor ir_1 = {PORT_IR_1, 0, 0};
+struct ir_sensor ir_2 = {PORT_IR_2, 0, 0};
+struct ir_sensor ir_3 = {PORT_IR_3, 0, 0};
+struct ir_sensor ir_4 = {PORT_IR_4, 0, 0};
+struct ir_sensor ir_5 = {PORT_IR_5, 0, 0};
 
 uint8_t prev_pos = POS_UHOH;
 
@@ -65,14 +60,11 @@ setup() {
   }
 
   ir_init(&ir_0);
-  // ir_init(&ir_1);
-  // ir_init(&ir_2);
-  // ir_init(&ir_3);
-  // ir_init(&ir_4);
-  // ir_init(&ir_5);
-  // ir_init(&ir_6);
-  // ir_init(&ir_7);
-  // ir_init(&ir_8);
+  ir_init(&ir_1);
+  ir_init(&ir_2);
+  ir_init(&ir_3);
+  ir_init(&ir_4);
+  ir_init(&ir_5);
 
   if (USE_BT) {
     SerialBT.println("Initialised");
@@ -109,14 +101,11 @@ loop() {
     switch (command_char) {
       case COM_RECALIBRATE:
         ir_init(&ir_0);
-        // ir_init(&ir_1);
-        // ir_init(&ir_2);
-        // ir_init(&ir_3);
-        // ir_init(&ir_4);
-        // ir_init(&ir_5);
-        // ir_init(&ir_6);
-        // ir_init(&ir_7);
-        // ir_init(&ir_8);
+        ir_init(&ir_1);
+        ir_init(&ir_2);
+        ir_init(&ir_3);
+        ir_init(&ir_4);
+        ir_init(&ir_5);
         break;
       case COM_GET_POS:
         if (USE_BT) {
@@ -136,47 +125,62 @@ loop() {
   }
 
   ir_0.avg_reading = get_moving_average(&ir_0);
-  // ir_1.avg_reading = get_moving_average(&ir_1);
-  // ir_2.avg_reading = get_moving_average(&ir_2);
-  // ir_3.avg_reading = get_moving_average(&ir_3);
-  // ir_4.avg_reading = get_moving_average(&ir_4);
-  // ir_5.avg_reading = get_moving_average(&ir_5);
-  // ir_6.avg_reading = get_moving_average(&ir_6);
-  // ir_7.avg_reading = get_moving_average(&ir_7);
-  // ir_8.avg_reading = get_moving_average(&ir_8);
+  ir_1.avg_reading = get_moving_average(&ir_1);
+  ir_2.avg_reading = get_moving_average(&ir_2);
+  ir_3.avg_reading = get_moving_average(&ir_3);
+  ir_4.avg_reading = get_moving_average(&ir_4);
+  ir_5.avg_reading = get_moving_average(&ir_5);
   
-  // if (ir_6.ambient_lvl - ir_6.avg_reading >= THRESHOLD) {
-  //   if (prev_pos != POS_PUL_VEIN) {
-  //     prev_pos = POS_PUL_VEIN;
-  //     pc_serial.putc(POS_PUL_VEIN);
-  //   }
-  // } else if (ir_5.ambient_lvl - ir_5.avg_reading >= THRESHOLD) {
-  //   if (prev_pos != POS_VEN_WALL) {
-  //     prev_pos = POS_VEN_WALL;
-  //     pc_serial.putc(POS_VEN_WALL);
-  //   }
-  // } else if (ir_4.ambient_lvl - ir_4.avg_reading >= THRESHOLD) {
-  //   if (prev_pos != POS_VEN) {
-  //     prev_pos = POS_VEN;
-  //     pc_serial.putc(POS_VEN);
-  //   }
-  // } else if (ir_3.ambient_lvl - ir_3.avg_reading >= THRESHOLD) {
-  //   if (prev_pos != POS_LOW_ATR) {
-  //     prev_pos = POS_LOW_ATR;
-  //     pc_serial.putc(POS_LOW_ATR);
-  //   }
-  // } else if (ir_2.ambient_lvl - ir_2.avg_reading >= THRESHOLD) {
-  //   if (prev_pos != POS_MID_ATR) {
-  //     prev_pos = POS_MID_ATR;
-  //     pc_serial.putc(POS_MID_ATR);
-  //   }
-  // } else if (ir_1.ambient_lvl - ir_1.avg_reading >= THRESHOLD) {
-  //   if (prev_pos != POS_UP_ATR) {
-  //     prev_pos = POS_UP_ATR;
-  //     pc_serial.putc(POS_UP_ATR);
-  //   }
-  // } else 
-  if (ir_0.ambient_lvl - ir_0.avg_reading >= THRESHOLD) {
+  if (ir_5.ambient_lvl - ir_5.avg_reading >= THRESHOLD) {
+    if (prev_pos != POS_VEN_WALL) {
+      prev_pos = POS_VEN_WALL;
+
+      if (USE_BT) {
+        SerialBT.write(POS_VEN_WALL);
+      } else {
+        Serial.write(POS_VEN_WALL);
+      }
+    }
+  } else if (ir_4.ambient_lvl - ir_4.avg_reading >= THRESHOLD) {
+    if (prev_pos != POS_VEN) {
+      prev_pos = POS_VEN;
+
+      if (USE_BT) {
+        SerialBT.write(POS_VEN);
+      } else {
+        Serial.write(POS_VEN);
+      }
+    }
+  } else if (ir_3.ambient_lvl - ir_3.avg_reading >= THRESHOLD) {
+    if (prev_pos != POS_LOW_ATR) {
+      prev_pos = POS_LOW_ATR;
+
+      if (USE_BT) {
+        SerialBT.write(POS_LOW_ATR);
+      } else {
+        Serial.write(POS_LOW_ATR);
+      }
+    }
+  } else if (ir_2.ambient_lvl - ir_2.avg_reading >= THRESHOLD) {
+    if (prev_pos != POS_MID_ATR) {
+      prev_pos = POS_MID_ATR;
+
+      if (USE_BT) {
+        SerialBT.write(POS_MID_ATR);
+      } else {
+        Serial.write(POS_MID_ATR);
+      }
+    }
+  } else if (ir_1.ambient_lvl - ir_1.avg_reading >= THRESHOLD) {
+    if (prev_pos != POS_UP_ATR) {
+      prev_pos = POS_UP_ATR;
+      if (USE_BT) {
+        SerialBT.write(POS_UP_ATR);
+      } else {
+        Serial.write(POS_UP_ATR);
+      }
+    }
+  } else if (ir_0.ambient_lvl - ir_0.avg_reading >= THRESHOLD) {
     if (prev_pos != POS_SVC) {
       prev_pos = POS_SVC;
       if (USE_BT) {
