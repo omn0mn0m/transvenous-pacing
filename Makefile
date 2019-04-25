@@ -18,7 +18,7 @@ help:		## Show this help.
 # Make Targets
 # =================================== 
 bin:
-	mkdir $@
+	mkdir ./test/$@
 
 test_main: bin
 	$(CPPC) -std=c++11 -Itest/mock -Iinclude $(CPPFLAGS) -o ./test/bin/$@ ./test/$@.cpp -v
