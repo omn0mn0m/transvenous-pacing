@@ -78,6 +78,7 @@ setup() {
 /**
  *  Main loop for the microcontroller
  */
+// LCOV_EXCL_START
 void 
 loop() {
   // put your main code here, to run repeatedly:
@@ -200,6 +201,7 @@ loop() {
     }
   }
 }
+// LCOV_EXCL_STOP 
 
 /**
  * Calculates the first average and ambient level for the sensor
