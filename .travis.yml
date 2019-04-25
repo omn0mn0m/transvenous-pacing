@@ -50,7 +50,7 @@ matrix:
 
       install:
           - gem install coveralls-lcov
-          - apt install lcov
+          - sudo apt install lcov
 
       script:
           - make test
