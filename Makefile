@@ -1,10 +1,10 @@
 # the compiler: gcc for C program, define as g++ for C++
-CPPC = clang++
+CPPC = g++
 
 #compiler flags:
 #  -g    adds debugging information to the executable file
 #  -Wall turns on most, but not all, compiler warnings
-CPPFLAGS = -g -Wall
+CPPFLAGS = -g -Wall --coverage
 
 # Help target from https://gist.github.com/prwhite/8168133
 
@@ -18,10 +18,13 @@ help:		## Show this help.
 # Make Targets
 # =================================== 
 bin:
-	mkdir ./test/$@
+	mkdir -p ./test/$@
 
 test_main: bin
 	$(CPPC) -std=c++11 -Itest/mock -Iinclude $(CPPFLAGS) -o ./test/bin/$@ ./test/$@.cpp -v
+
+coverage.info: test_main
+	lcov --capture --directory ./test --output-file $@
 
 test:		## Runs unit tests for the devices
 test: test_main
