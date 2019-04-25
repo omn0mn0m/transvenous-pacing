@@ -23,8 +23,12 @@ bin:
 test_main: bin
 	$(CPPC) -std=c++11 -Itest/mock -Iinclude $(CPPFLAGS) -o ./test/bin/$@ ./test/$@.cpp -v
 
-coverage.info: test_main
-	lcov --capture --directory ./test --output-file $@
+coverage.info:
+	lcov --capture --directory ./test --output-file ./test/$@
+	lcov --remove ./test/coverage.info "*/test/framework/*" --directory ./test --output-file ./test/$@
+
+index.html:
+	genhtml ./test/coverage.info --output-directory ./test/out
 
 test:		## Runs unit tests for the devices
 test: test_main

@@ -48,8 +48,15 @@ matrix:
 
       sudo: false
 
+      install:
+          - gem install coveralls-lcov
+
       script:
           - make test
+          - mv ./test_main.gcno ./test/
+          - mv ./test_main.gcda ./test/
+          - make coverage.info
+          - coveralls-lcov ./test/coverage.info
 
 
 #
