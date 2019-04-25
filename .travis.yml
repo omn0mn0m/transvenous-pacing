@@ -49,8 +49,6 @@ matrix:
       sudo: false
 
       script:
-          - pwd
-          - ls
           - make test
 
 
