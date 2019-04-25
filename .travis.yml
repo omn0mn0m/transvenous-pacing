@@ -46,7 +46,7 @@ matrix:
       compiler:
           - g++
 
-      sudo: false
+      sudo: true
 
       install:
           - gem install coveralls-lcov
