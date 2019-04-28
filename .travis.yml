@@ -51,6 +51,7 @@ matrix:
       install:
           - gem install coveralls-lcov
           - sudo apt install lcov
+          - pip install lizard
 
       script:
           - make test
