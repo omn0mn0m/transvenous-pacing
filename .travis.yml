@@ -58,6 +58,7 @@ matrix:
           - mv ./test_main.gcda ./test/
           - make coverage.info
           - coveralls-lcov ./test/coverage.info
+          - make complexity
 
 
 #

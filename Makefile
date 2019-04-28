@@ -26,7 +26,7 @@ test_main: bin
 coverage.info:	## Generates coverage report from unit tests
 coverage.info:
 	lcov --capture --directory ./test --output-file ./test/$@
-	lcov --remove ./test/coverage.info "*/test/framework/*" --directory ./test --output-file ./test/$@
+	lcov --remove ./test/coverage.info "*/test/framework/*" "*/c++/*" --directory ./test --output-file ./test/$@
 
 index.html:	## Generates coverage report in html format
 index.html:
