@@ -46,6 +46,11 @@ uint8_t prev_pos = POS_UHOH;
 // Global Functions
 void ir_init(struct ir_sensor *ir);
 uint16_t get_moving_average(struct ir_sensor *ir);
+void write_out(char data);
+int get_available_bytes();
+char read_in();
+void read_command();
+void update_position();
 
 /**
  *  Initialisation code
@@ -82,22 +87,16 @@ setup() {
 void 
 loop() {
   // put your main code here, to run repeatedly:
-  int bytes_incoming;
+  read_command();
+  update_position();
+}
 
-  if (USE_BT) {
-    bytes_incoming = SerialBT.available();
-  } else {
-    bytes_incoming = Serial.available();
-  }
+void
+read_command() {
+  int bytes_incoming = get_available_bytes();
 
   if (bytes_incoming > 0) {
-    uint8_t command_char;
-
-    if (USE_BT) {
-      command_char = SerialBT.read();
-    } else {
-      command_char = Serial.read();
-    }
+    uint8_t command_char = read_in();
     
     switch (command_char) {
       case COM_RECALIBRATE:
@@ -109,11 +108,7 @@ loop() {
         ir_init(&ir_5);
         break;
       case COM_GET_POS:
-        if (USE_BT) {
-          SerialBT.write(prev_pos);
-        } else {
-          Serial.write(prev_pos);
-        }
+        write_out(prev_pos);
         break;
       default:
         if (USE_BT) {
@@ -124,7 +119,10 @@ loop() {
         break;
     }
   }
+}
 
+void
+update_position() {
   ir_0.avg_reading = get_moving_average(&ir_0);
   ir_1.avg_reading = get_moving_average(&ir_1);
   ir_2.avg_reading = get_moving_average(&ir_2);
@@ -135,69 +133,37 @@ loop() {
   if (ir_5.ambient_lvl - ir_5.avg_reading >= THRESHOLD) {
     if (prev_pos != POS_VEN_WALL) {
       prev_pos = POS_VEN_WALL;
-
-      if (USE_BT) {
-        SerialBT.write(POS_VEN_WALL);
-      } else {
-        Serial.write(POS_VEN_WALL);
-      }
+      write_out(POS_VEN_WALL);
     }
   } else if (ir_4.ambient_lvl - ir_4.avg_reading >= THRESHOLD) {
     if (prev_pos != POS_VEN) {
       prev_pos = POS_VEN;
-
-      if (USE_BT) {
-        SerialBT.write(POS_VEN);
-      } else {
-        Serial.write(POS_VEN);
-      }
+      write_out(POS_VEN);
     }
   } else if (ir_3.ambient_lvl - ir_3.avg_reading >= THRESHOLD) {
     if (prev_pos != POS_LOW_ATR) {
       prev_pos = POS_LOW_ATR;
-
-      if (USE_BT) {
-        SerialBT.write(POS_LOW_ATR);
-      } else {
-        Serial.write(POS_LOW_ATR);
-      }
+      write_out(POS_LOW_ATR);
     }
   } else if (ir_2.ambient_lvl - ir_2.avg_reading >= THRESHOLD) {
     if (prev_pos != POS_MID_ATR) {
       prev_pos = POS_MID_ATR;
-
-      if (USE_BT) {
-        SerialBT.write(POS_MID_ATR);
-      } else {
-        Serial.write(POS_MID_ATR);
-      }
+      write_out(POS_MID_ATR);
     }
   } else if (ir_1.ambient_lvl - ir_1.avg_reading >= THRESHOLD) {
     if (prev_pos != POS_UP_ATR) {
       prev_pos = POS_UP_ATR;
-      if (USE_BT) {
-        SerialBT.write(POS_UP_ATR);
-      } else {
-        Serial.write(POS_UP_ATR);
-      }
+      write_out(POS_UP_ATR);
     }
   } else if (ir_0.ambient_lvl - ir_0.avg_reading >= THRESHOLD) {
     if (prev_pos != POS_SVC) {
       prev_pos = POS_SVC;
-      if (USE_BT) {
-        SerialBT.write(POS_SVC);
-      } else {
-        Serial.write(POS_SVC);
-      }
+      write_out(POS_SVC);
     }
   } else {
     if (prev_pos != POS_UHOH) {
       prev_pos = POS_UHOH;
-      if (USE_BT) {
-        SerialBT.write(POS_UHOH);
-      } else {
-        Serial.write(POS_UHOH);
-      }
+      write_out(POS_UHOH);
     }
   }
 }
@@ -246,4 +212,31 @@ get_moving_average(struct ir_sensor *ir) {
     uint16_t moving_avg = ((ir->avg_reading * (SAMPLE_SIZE - 1)) + analogRead(ir->pin)) / SAMPLE_SIZE;
 
     return moving_avg;
+}
+
+void
+write_out(char data) {
+  if (USE_BT) {
+    SerialBT.write(data);
+  } else {
+    Serial.write(data);
+  }
+}
+
+int
+get_available_bytes() {
+  if (USE_BT) {
+    return SerialBT.available();
+  } else {
+    return Serial.available();
+  }
+}
+
+char
+read_in() {
+  if (USE_BT) {
+      return SerialBT.read();
+    } else {
+      return Serial.read();
+    }
 }

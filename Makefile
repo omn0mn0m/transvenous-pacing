@@ -10,7 +10,7 @@ CPPFLAGS = -g -Wall --coverage
 
 # Add the following 'help' target to your Makefile
 # And add help text after each target name starting with '\#\#'
- 
+
 help:		## Show this help.
 	@fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//'
 
@@ -23,13 +23,23 @@ bin:
 test_main: bin
 	$(CPPC) -std=c++11 -Itest/mock -Iinclude $(CPPFLAGS) -o ./test/bin/$@ ./test/$@.cpp -v
 
+coverage.info:	## Generates coverage report from unit tests
 coverage.info:
 	lcov --capture --directory ./test --output-file ./test/$@
 	lcov --remove ./test/coverage.info "*/test/framework/*" --directory ./test --output-file ./test/$@
 
+index.html:	## Generates coverage report in html format
 index.html:
 	genhtml ./test/coverage.info --output-directory ./test/out
+
+complexity:	## Analyses code complexity
+complexity:
+	lizard --exclude "*/test/framework/*" --modified
 
 test:		## Runs unit tests for the devices
 test: test_main
 	./test/bin/$^
+
+clean:		## Removes all generated files
+clean:
+	rm -r *.gcda *.gcno ./test/out
