@@ -46,12 +46,12 @@ matrix:
       compiler:
           - g++
 
-      sudo: false
+      sudo: true
 
       install:
           - gem install coveralls-lcov
-          - apt install lcov
-          - pip install lizard
+          - sudo apt install lcov
+          - sudo pip install lizard
 
       script:
           - make test
