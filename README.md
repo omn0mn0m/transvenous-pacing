@@ -1,5 +1,6 @@
 # Balloon-Catheterization
 [![Build Status](https://travis-ci.org/omn0mn0m/Balloon-Catheterization.svg?branch=master)](https://travis-ci.org/omn0mn0m/Balloon-Catheterization)
+[![Coverage Status](https://coveralls.io/repos/github/omn0mn0m/Balloon-Catheterization/badge.svg?branch=master)](https://coveralls.io/github/omn0mn0m/Balloon-Catheterization?branch=master)
 
 BME Capstone Project
 
