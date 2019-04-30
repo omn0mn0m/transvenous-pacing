@@ -6,6 +6,7 @@
 .vscode/launch.json
 
 bin/
+out/
 test_main.gcda
 test_main.gcno
 .vscode/ipch/
