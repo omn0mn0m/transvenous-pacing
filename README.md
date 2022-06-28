@@ -1,8 +1,8 @@
-# Balloon-Catheterization
-[![Build Status](https://travis-ci.org/omn0mn0m/Balloon-Catheterization.svg?branch=master)](https://travis-ci.org/omn0mn0m/Balloon-Catheterization)
-[![Coverage Status](https://coveralls.io/repos/github/omn0mn0m/Balloon-Catheterization/badge.svg?branch=master)](https://coveralls.io/github/omn0mn0m/Balloon-Catheterization?branch=master)
-![GitHub](https://img.shields.io/github/license/omn0mn0m/Balloon-Catheterization.svg)
+# transvenous-pacing
+[![Build Status](https://travis-ci.org/omn0mn0m/transvenous-pacing.svg?branch=master)](https://travis-ci.org/omn0mn0m/transvenous-pacing)
+[![Coverage Status](https://coveralls.io/repos/github/omn0mn0m/transvenous-pacing/badge.svg?branch=master)](https://coveralls.io/github/omn0mn0m/transvenous-pacing?branch=master)
+![GitHub](https://img.shields.io/github/license/omn0mn0m/transvenous-pacing.svg)
 
 BME Capstone Project
 
-This code is meant to work with [Balloon-Catheterization-GUI](https://github.com/omn0mn0m/Balloon-Catheterization-GUI).
+This code is meant to work with [transvenous-pacing-gui](https://github.com/omn0mn0m/transvenous-pacing-gui).
